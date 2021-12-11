@@ -4,7 +4,7 @@ import com.tregulov.spring.rest.entity.Employee;
 
 import java.util.List;
 
-public interface EmoloyeeService {
+public interface EmployeeService {
 
     public List<Employee>getAllEmployees();
 

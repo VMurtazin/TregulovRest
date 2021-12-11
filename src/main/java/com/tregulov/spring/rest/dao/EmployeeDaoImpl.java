@@ -3,10 +3,10 @@ package com.tregulov.spring.rest.dao;
 import com.tregulov.spring.rest.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -17,11 +17,12 @@ public class EmployeeDaoImpl implements EmployeeDAO{
     @Autowired
     private SessionFactory sessionFactory;
 
-
     @Override
+
     public List<Employee> getAllEmployees() {
 
         Session session=sessionFactory.getCurrentSession();
+
         Query<Employee> query=session.createQuery("from Employee ", Employee.class);
         List<Employee> allEmployees=query.getResultList();
         return allEmployees;

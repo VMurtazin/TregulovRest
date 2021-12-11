@@ -1,7 +1,5 @@
 package com.tregulov.spring.rest.configuration;
 
-
-
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,7 +26,7 @@ public class MyConfig {
         try {
 
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/my_db");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/my_db?useSSL=false&serverTimezone=UTC");
             dataSource.setUser("root");
             dataSource.setPassword("rootroot");
 
@@ -43,7 +41,7 @@ public class MyConfig {
 
         LocalSessionFactoryBean sessionFactory=new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com/tregulov/spring/rest/entity");
+        sessionFactory.setPackagesToScan("com.tregulov.spring.rest.entity");
 
         Properties hibernateProperties=new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
