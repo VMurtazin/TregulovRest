@@ -2,12 +2,13 @@ package com.tregulov.spring.rest.controller;
 
 
 import com.tregulov.spring.rest.entity.Employee;
+import com.tregulov.spring.rest.exception_handling.EmployeeIncorrectData;
+import com.tregulov.spring.rest.exception_handling.NoSuchEmplException;
 import com.tregulov.spring.rest.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +30,42 @@ public class MyRESTController {
     public Employee getEmployee(@PathVariable int id){
 
         Employee employee=employeeService.getEmployee(id);
+
+        if (employee==null){
+
+            throw new NoSuchEmplException("Net takogo rabotnika s ID="+id+" in DB");
+        }
+
         return employee;
 
     }
 
+
+    @PostMapping("/employees")
+    public Employee addNewEmployee (@RequestBody Employee employee){
+
+        employeeService.saveEmployee(employee);
+        return employee;
+    }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee (@RequestBody Employee employee){
+
+        employeeService.saveEmployee(employee);
+        return employee;
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public String deleteEmployee (@PathVariable int id){
+
+        Employee employee=employeeService.getEmployee(id);
+        if(employee==null){
+            throw new NoSuchEmplException("No employee with id= "+id+" in DB");
+        }else {
+            employeeService.deleteEmployee(id);
+            return "Employee with id number " + id + " deleted";
+        }
+
+    }
 
 }
